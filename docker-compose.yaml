@@ -9,15 +9,14 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "67:67/udp"
       - "8080:80/tcp"
-      - "8443:443/tcp"
     environment:
       TZ: 'America/New_York'
-      WEBPASSWORD_FILE: /opt/pihole/secrets/admin_pw.txt
+      WEBPASSWORD_FILE: "/opt/pihole/secrets/admin_pw.txt"
+      SERVERIP: "192.168.1.70"
     volumes:
-      - '/opt/pihole/etc-pihole/:/etc/pihole/'
-      - '/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - "/opt/pihole/etc-pihole/:/etc/pihole/"
+      - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
     restart: unless-stopped
 #  lancache:
 #    image: lancachenet/monolithic:latest
