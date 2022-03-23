@@ -4,7 +4,7 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-    network_mode: "host"
+#    network_mode: "host"
     env_file: .env
     ports:
       - "53:53/tcp"
@@ -12,8 +12,7 @@ services:
       - "8080:80/tcp"
     environment:
       TZ: 'America/New_York'
-      WEBPASSWORD_FILE: "/opt/pihole/secrets/admin_pw.txt"
-      SERVERIP: "192.168.1.70"
+#      WEBPASSWORD_FILE: "/opt/pihole/secrets/admin_pw.txt"
     volumes:
       - "/opt/pihole/etc-pihole/:/etc/pihole/"
       - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
