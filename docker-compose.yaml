@@ -4,6 +4,7 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
+    network_mode: "host"
     env_file: .env
     ports:
       - "53:53/tcp"
@@ -39,6 +40,7 @@ services:
     image: ghcr.io/tautulli/tautulli
     container_name: tautulli
     restart: unless-stopped
+    network_mode: "host"
     volumes:
       - /opt/Tautulli:/config
     environment:
@@ -46,10 +48,11 @@ services:
       - PGID=1000
       - TZ=America/New_York
     ports:
-      - 8181:8181
+      - "8181:8181"
   ombi:
     image: lscr.io/linuxserver/ombi
     container_name: ombi
+    network_mode: "host"
     environment:
       - PUID=1000
       - GUID=1000
@@ -57,5 +60,5 @@ services:
     volumes:
       - /opt/Ombi:/config
     ports:
-      - 3579:3579
+      - "3579:3579"
     restart:  unless-stopped
