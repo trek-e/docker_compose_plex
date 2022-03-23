@@ -13,7 +13,7 @@ services:
       - "8443:443/tcp"
     environment:
       TZ: 'America/New_York'
-      WEBPASSWORD: 'aud3wasm@trep3YEES'
+      WEBPASSWORD: 'aud3wasm@trep3YEES'   #yes I know this is here, one day I'll fix this.
     volumes:
       - '/opt/pihole/etc-pihole/:/etc/pihole/'
       - '/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
