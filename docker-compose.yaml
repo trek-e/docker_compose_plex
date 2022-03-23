@@ -1,0 +1,61 @@
+version: "3.4"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    env_file: .env
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "8080:80/tcp"
+      - "8443:443/tcp"
+    environment:
+      TZ: 'America/New_York'
+      WEBPASSWORD: 'aud3wasm@trep3YEES'
+    volumes:
+      - '/opt/pihole/etc-pihole/:/etc/pihole/'
+      - '/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    restart: unless-stopped
+#  lancache:
+#    image: lancachenet/monolithic:latest
+#    container_name: lancache
+#    env_file: .env
+#    restart: unless-stopped
+#    ports:
+#      - 80:80/tcp
+#      - 443:443/tcp
+#    volumes:
+#      - ${CACHE_ROOT}/cache:/data/cache
+#      - ${CACHE_ROOT}/logs:/data/logs
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - /opt/Tautulli:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    ports:
+      - 8181:8181
+  ombi:
+    image: lscr.io/linuxserver/ombi
+    container_name: ombi
+    environment:
+      - PUID=1000
+      - GUID=1000
+      - TZ=America/New_York
+    volumes:
+      - /opt/Ombi:/config
+    ports:
+      - 3579:3579
+    restart:  unless-stopped
