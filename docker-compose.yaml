@@ -12,7 +12,8 @@ services:
       - "8080:80/tcp"
     environment:
       TZ: 'America/New_York'
-#      WEBPASSWORD_FILE: "/opt/pihole/secrets/admin_pw.txt"
+      WEBPASSWORD:
+      WEBPASSWORD_FILE: "/opt/pihole/secrets/admin_pw.txt"
     volumes:
       - "/opt/pihole/etc-pihole/:/etc/pihole/"
       - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
