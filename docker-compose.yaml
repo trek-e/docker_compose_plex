@@ -62,7 +62,6 @@ services:
       - "3579:3579"
     restart:  unless-stopped
   nginx:
-    container_name: nginix_reverseproxy
     image: nginx:latest
     container_name: nginx_container
     ports:
