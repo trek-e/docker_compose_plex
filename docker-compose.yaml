@@ -71,7 +71,7 @@ services:
     network_mode: host
     restart:  unless-stopped
   certbot:
-    image:certbot/certbot
+    image: certbot/certbot
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
