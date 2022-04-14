@@ -77,4 +77,4 @@ services:
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d nomorestars.com --agree-tos
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d www.nomorestars.com --agree-tos
