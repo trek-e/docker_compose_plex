@@ -55,6 +55,7 @@ services:
       - PUID=1000
       - GUID=1000
       - TZ=America/New_York
+      - BASE_URL=/ombi
     volumes:
       - /opt/Ombi:/config
     ports:
