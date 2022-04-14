@@ -60,3 +60,19 @@ services:
     ports:
       - "3579:3579"
     restart:  unless-stopped
+  nginx:
+    image: nginx:latest
+    container_name: nginx_container
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    network_mode: host
+    restart:  unless-stopped
+  certbot:
+    image:certbot/certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d nomorestars.com --agree-tos
