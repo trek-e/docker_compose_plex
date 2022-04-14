@@ -61,6 +61,7 @@ services:
       - "3579:3579"
     restart:  unless-stopped
   nginx:
+    name: nginix_reverseproxy
     image: nginx:latest
     container_name: nginx_container
     ports:
@@ -71,6 +72,7 @@ services:
     network_mode: host
     restart:  unless-stopped
   certbot:
+    name: certbot
     image: certbot/certbot
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
