@@ -88,22 +88,22 @@ services:
       - 8266:8266 # server port
       - 8267:8267 # Internal node port
       - 8268:8268 # Example extra node port
-      environment:
+    environment:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
       - UMASK_SET=002
-      - serverIP=0.0.0.0
+      - serverIP=192.168.1.70
       - serverPort=8266
       - webUIPort=8265
-      - internalNode=true
-      - nodeID=MyInternalNode
-      volumes:
-      - /docker/tdarr/server:/app/server
-      - /docker/tdarr/configs:/app/configs
-      - /docker/tdarr/logs:/app/logs
+      - internalNode=false
+      - nodeID=PlexServerNode
+    volumes:
+      - /home/plex/tdarr/server:/app/server
+      - /home/plex/tdarr/configs:/app/configs
+      - /home/plex/tdarr/logs:/app/logs
       - /mnt/media/library:/media
-      - /transcode_cache:/temp
+      - /home/plex/transcode_cache:/temp
 
 #  certbot_teslamate:
 #    container_name: certbot_teslamate
