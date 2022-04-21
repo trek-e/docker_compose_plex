@@ -96,7 +96,7 @@ services:
       - serverIP=192.168.1.70
       - serverPort=8266
       - webUIPort=8265
-      - internalNode=false
+      - internalNode=true
       - nodeID=PlexServerNode
     volumes:
       - /home/plex/tdarr/server:/app/server
@@ -104,24 +104,6 @@ services:
       - /home/plex/tdarr/logs:/app/logs
       - /mnt/media/library:/media
       - /home/plex/transcode_cache:/temp
-    tdarr-node:
-      container_name: tdarr-node
-      image: ghcr.io/haveagitgat/tdarr_node:latest
-      restart: unless-stopped
-      network_mode: service:tdarr
-      environment:
-        - TZ=${TZ}
-        - PUID=${PUID}
-        - PGID=${PGID}
-        - UMASK_SET=002
-        - nodeID=PlexNode
-        - serverIP=192.168.1.70
-        - serverPort=8266
-      volumes:
-        - /home/plex/tdarr/configs:/app/configs
-        - /home/plex/tdarr/logs:/app/logs
-        - /mnt/media/library:/media
-        - /home/plex/transcode_cache:/temp
 #  certbot_teslamate:
 #    container_name: certbot_teslamate
 #    image: certbot/certbot
