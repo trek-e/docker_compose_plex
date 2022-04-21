@@ -96,7 +96,7 @@ services:
       - serverIP=192.168.1.70
       - serverPort=8266
       - webUIPort=8265
-      - internalNode=false
+      - internalNode=true
       - nodeID=PlexServerNode
     volumes:
       - /home/plex/tdarr/server:/app/server
