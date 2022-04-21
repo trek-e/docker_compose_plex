@@ -4,7 +4,6 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-#    network_mode: "host"
     env_file: .env
     ports:
       - "53:53/tcp"
@@ -45,16 +44,16 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/New_York
+      - TZ=${TZ}
     ports:
       - "8181:8181"
   ombi:
     image: lscr.io/linuxserver/ombi
     container_name: ombi
     environment:
-      - PUID=1000
-      - GUID=1000
-      - TZ=America/New_York
+      - PUID=${PUID}
+      - GUID=${PGID}
+      - TZ=${TZ}
       - BASE_URL=/ombi
     volumes:
       - /opt/Ombi:/config
@@ -72,10 +71,109 @@ services:
       - ./certbot/www/:/var/www/certbot/:ro
       - ./certbot/conf:/etc/letsencrypt/:ro
     restart:  unless-stopped
-  certbot:
-    container_name: certbot
+  certbot_www:
+    container_name: certbot_www
     image: certbot/certbot
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot:rw
     command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d www.nomorestars.com --agree-tos
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+      - 8267:8267 # Internal node port
+      - 8268:8268 # Example extra node port
+      environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK_SET=002
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - nodeID=MyInternalNode
+      volumes:
+      - /docker/tdarr/server:/app/server
+      - /docker/tdarr/configs:/app/configs
+      - /docker/tdarr/logs:/app/logs
+      - /mnt/media/library:/media
+      - /transcode_cache:/temp
+
+#  certbot_teslamate:
+#    container_name: certbot_teslamate
+#    image: certbot/certbot
+#    volumes:
+#      - ./certbot/conf_tm:/etc/letsencrypt
+#      - ./certbot/www_tm:/var/www/certbot:rw
+#    command:  
+#  teslamate: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d teslamate.nomorestars.com --agree-tos
+#      image: teslamate/teslamate:latest
+#      restart: always
+#      environment:
+#        - ENCRYPTION_KEY=${TM_ENCRYPTION_KEY}
+#        - DATABASE_USER=${TM_DB_USER}
+#        - DATABASE_PASS=${TM_DB_PASS}
+#        - DATABASE_NAME=${TM_DB_NAME}
+#        - DATABASE_HOST=database
+#        - MQTT_HOST=mosquitto
+#        - VIRTUAL_HOST=${FQDN_TM}
+#        - CHECK_ORIGIN=true
+#        - TZ=${TZ}
+#      ports:
+#        - 4000:4000
+#      volumes:
+#        - ./import:/opt/app/import
+#      cap_drop:
+#        - all
+  
+#    database:
+#      image: postgres:13
+#      restart: always
+#      environment:
+#        - POSTGRES_USER=${TM_DB_USER}
+#        - POSTGRES_PASSWORD=${TM_DB_PASS}
+#        - POSTGRES_DB=${TM_DB_NAME}
+#      volumes:
+#        - teslamate-db:/var/lib/postgresql/data
+#  
+#    grafana:
+#      image: teslamate/grafana:latest
+#      restart: always
+#      environment:
+#        - DATABASE_USER=${TM_DB_USER}
+#        - DATABASE_PASS=${TM_DB_PASS}
+#        - DATABASE_NAME=${TM_DB_NAME}
+#        - DATABASE_HOST=database
+#        - GRAFANA_PASSWD=${GRAFANA_PW}
+#        - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+#        - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PW}
+#        - GF_AUTH_ANONYMOUS_ENABLED=false
+#        - GF_SERVER_DOMAIN=${FQDN_TM}
+#        - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana
+#        - GF_SERVER_SERVE_FROM_SUB_PATH=true
+#      ports:
+#        - 3000:3000
+#      volumes:
+#        - teslamate-grafana-data:/var/lib/grafana
+  
+#    mosquitto:
+#      image: eclipse-mosquitto:2
+#      restart: always
+#      command: mosquitto -c /mosquitto-no-auth.conf
+      # ports:
+      #   - 1883:1883
+#      volumes:
+#        - mosquitto-conf:/mosquitto/config
+#        - mosquitto-data:/mosquitto/data
+  
+#  volumes:
+#    teslamate-db:
+#    teslamate-grafana-data:
+#    mosquitto-conf:
+#    mosquitto-data:
