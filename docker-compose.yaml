@@ -21,6 +21,10 @@ services:
   lancache:
     image: lancachenet/monolithic:latest
     container_name: lancache
+    networks:
+      lancachevlan:
+        ipv4_address 192.168.2.2
+    
     env_file: .env
     restart: unless-stopped
     ports:
@@ -31,10 +35,6 @@ services:
       - ${CACHE_ROOT}/logs:/data/logs
   watchtower:
     image: containrrr/watchtower
-    networks:
-      lancachevlan:
-        ipv4_address 192.168.2.2
-      
     container_name: watchtower
     restart: unless-stopped
     volumes:
