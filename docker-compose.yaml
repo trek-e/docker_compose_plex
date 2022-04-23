@@ -18,17 +18,17 @@ services:
       - "/opt/pihole/etc-pihole/:/etc/pihole/"
       - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
     restart: unless-stopped
-#  lancache:
-#    image: lancachenet/monolithic:latest
-#    container_name: lancache
-#    env_file: .env
-#    restart: unless-stopped
-#    ports:
-#      - 80:80/tcp
-#      - 443:443/tcp
-#    volumes:
-#      - ${CACHE_ROOT}/cache:/data/cache
-#      - ${CACHE_ROOT}/logs:/data/logs
+  lancache:
+    image: lancachenet/monolithic:latest
+    container_name: lancache
+    env_file: .env
+    restart: unless-stopped
+    ports:
+      - 9080:80/tcp
+      - 9443:443/tcp
+    volumes:
+      - ${CACHE_ROOT}/cache:/data/cache
+      - ${CACHE_ROOT}/logs:/data/logs
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
@@ -165,8 +165,8 @@ services:
 #      image: eclipse-mosquitto:2
 #      restart: always
 #      command: mosquitto -c /mosquitto-no-auth.conf
-      # ports:
-      #   - 1883:1883
+#      ports:
+#      - 1883:1883
 #      volumes:
 #        - mosquitto-conf:/mosquitto/config
 #        - mosquitto-data:/mosquitto/data
