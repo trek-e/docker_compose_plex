@@ -181,7 +181,7 @@ services:
 #    mosquitto-conf:
 #    mosquitto-data:
   
-Networks:
+networks:
   lancachevlan:
     name: lancachevlan
     driver: macvlan
