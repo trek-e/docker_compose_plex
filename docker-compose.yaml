@@ -105,7 +105,7 @@ services:
       - /home/plex/tdarr/server:/app/server
       - /home/plex/tdarr/configs:/app/configs
       - /home/plex/tdarr/logs:/app/logs
-      - /mnt/media/library:/media
+      - /mnt/naslib/plex/library:/media
       - /home/plex/transcode_cache:/temp
 #  certbot_teslamate:
 #    container_name: certbot_teslamate
