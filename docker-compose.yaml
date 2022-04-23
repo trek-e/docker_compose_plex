@@ -24,7 +24,6 @@ services:
     networks:
       lancachevlan:
         ipv4_address 192.168.2.2
-    
     env_file: .env
     restart: unless-stopped
     ports:
