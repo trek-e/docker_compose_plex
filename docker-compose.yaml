@@ -22,7 +22,7 @@ services:
     image: lancachenet/monolithic:latest
     container_name: lancache
     networks:
-      lancachevlan:
+      macvlan0:
         ipv4_address 192.168.2.2
     env_file: .env
     restart: unless-stopped
@@ -181,13 +181,5 @@ services:
 #    mosquitto-data:
   
 networks:
-  lancachevlan:
-    name: lancachevlan
-    driver: macvlan
-    driver_opts:
-      parent: eth0
-    ipam:
-      config:
-        - subnet: "192.168.2.0/24"
-          ip_range: "192.168.2.0/25"
-          gateway: "192.168.2.1"
+  macvlan0:
+    external: true
