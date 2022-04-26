@@ -1,34 +1,31 @@
 version: "2.4"
 
 services:
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
-    env_file: .env
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8080:80/tcp"
-    environment:
-      TZ: 'America/New_York'
-      WEBPASSWORD:
-      WEBPASSWORD_FILE: '/opt/pihole/secrets/admin_pw.txt'
-      DNSMASQ_USER:  'root'
-    volumes:
-      - "/opt/pihole/etc-pihole/:/etc/pihole/"
-      - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
-    restart: unless-stopped
+#  pihole:
+#    container_name: pihole
+#    image: pihole/pihole:latest
+#    env_file: .env
+#    ports:
+#      - "53:53/tcp"
+#      - "53:53/udp"
+#      - "8080:80/tcp"
+#    environment:
+#      TZ: 'America/New_York'
+#      WEBPASSWORD:
+#      WEBPASSWORD_FILE: '/opt/pihole/secrets/admin_pw.txt'
+#      DNSMASQ_USER:  'root'
+#    volumes:
+#      - "/opt/pihole/etc-pihole/:/etc/pihole/"
+#      - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+#    restart: unless-stopped
   lancache:
     image: lancachenet/monolithic:latest
     container_name: lancache
-    networks:
-      macvlan0:
-        ipv4_address: 192.168.2.2
     env_file: .env
     restart: unless-stopped
     ports:
-      - 80:80/tcp
-      - 443:443/tcp
+      - 8080:80/tcp
+      - 8443:443/tcp
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
       - ${CACHE_ROOT}/logs:/data/logs
@@ -106,7 +103,7 @@ services:
       - /home/plex/tdarr/configs:/app/configs
       - /home/plex/tdarr/logs:/app/logs
       - /mnt/naslib/plex/library:/media
-      - /home/plex/transcode_cache:/temp
+      - /mnt/naslib/plex/cache:/temp
 #  certbot_teslamate:
 #    container_name: certbot_teslamate
 #    image: certbot/certbot
@@ -180,14 +177,14 @@ services:
 #    mosquitto-conf:
 #    mosquitto-data:
   
-networks:
-  macvlan0:
-    name: macvlan0
-    driver: macvlan
-    driver_opts:
-      parent: enp0s31f6
-    ipam:
-      config:
-        - subnet: "192.168.2.0/24"
-          ip_range: "192.168.2.0/25"
-          gateway: "192.168.2.1"
+#networks:
+#  macvlan0:
+#    name: macvlan0
+#    driver: macvlan
+#    driver_opts:
+#      parent: enp0s31f6
+#    ipam:
+#      config:
+#        - subnet: "192.168.2.0/24"
+#          ip_range: "192.168.2.0/25"
+#          gateway: "192.168.2.1"
