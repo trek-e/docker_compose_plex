@@ -2,15 +2,15 @@ version: "2.4"
 
 services:
   fileflows:
-  image: revenz/fileflows
-  container_name: fileflows
-  env_file: .env
-  environment:
-    - TZ=${TZ}
-  volumes:
-    - /opt/fileflows:/app/Data
-    - /var/log:/app/Logs
-    - /mnt/naslib/plex/library:/media  #optional
+    image: revenz/fileflows
+    container_name: fileflows
+    env_file: .env
+    environment:
+     - TZ=${TZ}
+     volumes:
+     - /opt/fileflows:/app/Data
+     - /var/log:/app/Logs
+     - /mnt/naslib/plex/library:/media  #optional
   ports:
     - 5000:5000
   restart: unless-stopped
@@ -119,6 +119,7 @@ services:
       - /home/plex/tdarr/logs:/app/logs
       - /mnt/naslib/plex/library:/media
       - /mnt/naslib/plex/cache:/temp
+
 #  certbot_teslamate:
 #    container_name: certbot_teslamate
 #    image: certbot/certbot
