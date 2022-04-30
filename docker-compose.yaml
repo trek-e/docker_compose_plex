@@ -56,8 +56,8 @@ services:
     volumes:
       - /opt/Tautulli:/config
     environment:
-      - PUID=$(PUID)
-      - PGID=$(PGID)
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=${TZ}
     ports:
       - "8181:8181"
