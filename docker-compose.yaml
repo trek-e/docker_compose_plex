@@ -1,23 +1,23 @@
 version: "2.4"
 
 services:
-#  pihole:
-#    container_name: pihole
-#    image: pihole/pihole:latest
-#    env_file: .env
-#    ports:
-#      - "53:53/tcp"
-#      - "53:53/udp"
-#      - "8080:80/tcp"
-#    environment:
-#      TZ: 'America/New_York'
-#      WEBPASSWORD:
-#      WEBPASSWORD_FILE: '/opt/pihole/secrets/admin_pw.txt'
-#      DNSMASQ_USER:  'root'
-#    volumes:
-#      - "/opt/pihole/etc-pihole/:/etc/pihole/"
-#      - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
-#    restart: unless-stopped
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    env_file: .env
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"
+    environment:
+      TZ: 'America/New_York'
+      WEBPASSWORD:
+      WEBPASSWORD_FILE: '/opt/pihole/secrets/admin_pw.txt'
+      DNSMASQ_USER:  'root'
+    volumes:
+      - "/opt/pihole/etc-pihole/:/etc/pihole/"
+      - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+    restart: unless-stopped
   lancache:
     image: lancachenet/monolithic:latest
     container_name: lancache
@@ -39,17 +39,19 @@ services:
     image: ghcr.io/tautulli/tautulli
     container_name: tautulli
     restart: unless-stopped
+    env_file: .env
     volumes:
       - /opt/Tautulli:/config
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=$(PUID)
+      - PGID=$(PGID)
       - TZ=${TZ}
     ports:
       - "8181:8181"
   ombi:
     image: lscr.io/linuxserver/ombi
     container_name: ombi
+    env_file: .env
     environment:
       - PUID=${PUID}
       - GUID=${PGID}
