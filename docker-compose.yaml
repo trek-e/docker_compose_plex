@@ -11,9 +11,9 @@ services:
       - /opt/fileflows:/app/Data
       - /var/log:/app/Logs
       - /mnt/naslib/plex/library:/media  #optional
-      ports:
+    ports:
       - 5000:5000
-      restart: unless-stopped
+    restart: unless-stopped
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
