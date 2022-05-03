@@ -94,33 +94,7 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot:rw
     command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d www.nomorestars.com --agree-tos
-  tdarr:
-    container_name: tdarr
-    image: ghcr.io/haveagitgat/tdarr:latest
-    restart: unless-stopped
-    network_mode: host
-    ports:
-      - 8265:8265 # webUI port
-      - 8266:8266 # server port
-      - 8267:8267 # Internal node port
-      - 8268:8268 # Example extra node port
-    environment:
-      - TZ=${TZ}
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK_SET=002
-      - serverIP=192.168.1.70
-      - serverPort=8266
-      - webUIPort=8265
-      - internalNode=true
-      - nodeID=PlexServerNode
-    volumes:
-      - /home/plex/tdarr/server:/app/server
-      - /home/plex/tdarr/configs:/app/configs
-      - /home/plex/tdarr/logs:/app/logs
-      - /mnt/naslib/plex/library:/media
-      - /mnt/naslib/plex/cache:/temp
-
+  
 #  certbot_teslamate:
 #    container_name: certbot_teslamate
 #    image: certbot/certbot
