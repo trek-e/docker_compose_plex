@@ -29,8 +29,8 @@ services:
       WEBPASSWORD_FILE: '/opt/pihole/secrets/admin_pw.txt'
       DNSMASQ_USER:  'root'
     volumes:
-      - "/opt/pihole/etc-pihole/:/etc/pihole/"
-      - "/opt/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+      - "/mnt/piholeopt/etc-pihole/:/etc/pihole/"
+      - "/mnt/piholeopt/etc-dnsmasq.d/:/etc/dnsmasq.d/"
     restart: unless-stopped
 #  lancache:
 #    image: lancachenet/monolithic:latest
