@@ -26,7 +26,7 @@ services:
     environment:
       TZ: 'America/New_York'
       WEBPASSWORD:
-      WEBPASSWORD_FILE: '/opt/pihole/secrets/admin_pw.txt'
+      WEBPASSWORD_FILE: '/mnt/piholeopt:/secrets/admin_pw.txt'
       DNSMASQ_USER:  'root'
     volumes:
       - "/mnt/piholeopt/etc-pihole/:/etc/pihole/"
