@@ -94,8 +94,7 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot:rw
     command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d www.nomorestars.com --agree-tos
-
-homeassistant:
+  homeassistant:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
