@@ -94,88 +94,13 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot:rw
     command: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d www.nomorestars.com --agree-tos
-  
-#  certbot_teslamate:
-#    container_name: certbot_teslamate
-#    image: certbot/certbot
-#    volumes:
-#      - ./certbot/conf_tm:/etc/letsencrypt
-#      - ./certbot/www_tm:/var/www/certbot:rw
-#    command:  
-#  teslamate: certonly --webroot -w /var/www/certbot --force-renewal --email trekkie@nomorestars.com -d teslamate.nomorestars.com --agree-tos
-#      image: teslamate/teslamate:latest
-#      restart: always
-#      environment:
-#        - ENCRYPTION_KEY=${TM_ENCRYPTION_KEY}
-#        - DATABASE_USER=${TM_DB_USER}
-#        - DATABASE_PASS=${TM_DB_PASS}
-#        - DATABASE_NAME=${TM_DB_NAME}
-#        - DATABASE_HOST=database
-#        - MQTT_HOST=mosquitto
-#        - VIRTUAL_HOST=${FQDN_TM}
-#        - CHECK_ORIGIN=true
-#        - TZ=${TZ}
-#      ports:
-#        - 4000:4000
-#      volumes:
-#        - ./import:/opt/app/import
-#      cap_drop:
-#        - all
-  
-#    database:
-#      image: postgres:13
-#      restart: always
-#      environment:
-#        - POSTGRES_USER=${TM_DB_USER}
-#        - POSTGRES_PASSWORD=${TM_DB_PASS}
-#        - POSTGRES_DB=${TM_DB_NAME}
-#      volumes:
-#        - teslamate-db:/var/lib/postgresql/data
-#  
-#    grafana:
-#      image: teslamate/grafana:latest
-#      restart: always
-#      environment:
-#        - DATABASE_USER=${TM_DB_USER}
-#        - DATABASE_PASS=${TM_DB_PASS}
-#        - DATABASE_NAME=${TM_DB_NAME}
-#        - DATABASE_HOST=database
-#        - GRAFANA_PASSWD=${GRAFANA_PW}
-#        - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
-#        - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PW}
-#        - GF_AUTH_ANONYMOUS_ENABLED=false
-#        - GF_SERVER_DOMAIN=${FQDN_TM}
-#        - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana
-#        - GF_SERVER_SERVE_FROM_SUB_PATH=true
-#      ports:
-#        - 3000:3000
-#      volumes:
-#        - teslamate-grafana-data:/var/lib/grafana
-  
-#    mosquitto:
-#      image: eclipse-mosquitto:2
-#      restart: always
-#      command: mosquitto -c /mosquitto-no-auth.conf
-#      ports:
-#      - 1883:1883
-#      volumes:
-#        - mosquitto-conf:/mosquitto/config
-#        - mosquitto-data:/mosquitto/data
-  
-#  volumes:
-#    teslamate-db:
-#    teslamate-grafana-data:
-#    mosquitto-conf:
-#    mosquitto-data:
-  
-#networks:
-#  macvlan0:
-#    name: macvlan0
-#    driver: macvlan
-#    driver_opts:
-#      parent: enp0s31f6
-#    ipam:
-#      config:
-#        - subnet: "192.168.2.0/24"
-#          ip_range: "192.168.2.0/25"
-#          gateway: "192.168.2.1"
+
+homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /mnt/piholeopt/config-homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
