@@ -1,20 +1,20 @@
 version: "2.4"
 
 services:
-#  fileflows:
-#    image: revenz/fileflows
-#    container_name: fileflows
-#    env_file: .env
-#    environment:
-#      - TZ=${TZ}
-#    volumes:
-#      - /opt/fileflows:/app/Data
-#      - /var/log/FileFlow:/app/Logs
-#      - /mnt/naslib/plex/library:/media  #optional
-#      - /mnt/naslib/plex/nzbget/downloads:/nzbget
-#    ports:
-#      - 5000:5000
-#    restart: unless-stopped
+  fileflows:
+    image: revenz/fileflows
+    container_name: fileflows
+    env_file: .env
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - /opt/fileflows:/app/Data
+      - /var/log/FileFlow:/app/Logs
+      - /mnt/naslib/plex/library:/media  #optional
+      - /mnt/naslib/plex/nzbget/downloads:/nzbget
+    ports:
+      - 5000:5000
+    restart: unless-stopped
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
