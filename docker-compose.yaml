@@ -42,7 +42,7 @@ services:
       - 8443:443/tcp
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
-     - ${CACHE_ROOT}/logs:/data/logs
+      - ${CACHE_ROOT}/logs:/data/logs
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
