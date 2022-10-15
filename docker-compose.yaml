@@ -56,6 +56,7 @@ services:
     env_file: .env
     volumes:
       - /opt/Tautulli:/config
+      - /home/plex:/home
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
