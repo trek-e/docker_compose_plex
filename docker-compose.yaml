@@ -148,7 +148,7 @@ services:
     ports:
       - ${IP}:8080:80
     links:
-      - db_wp:db_wp
+      - db_wp:db
   
   db_wp:
     image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
