@@ -161,10 +161,10 @@ services:
       ]
     volumes:
       - ./wp-data:/docker-entrypoint-initdb.d
-      - db_wpdata:/var/lib/mysql
+      - dbwpdata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
   
   volumes:
-    db_wpdata:
+    dbwpdata:
