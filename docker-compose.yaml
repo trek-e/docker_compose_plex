@@ -146,7 +146,7 @@ services:
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
       UPLOAD_LIMIT: 50M
     ports:
-      - ${IP}:8080:80
+      - ${IP}:9080:80
     links:
       - db_wp:db
   
