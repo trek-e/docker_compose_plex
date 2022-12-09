@@ -104,82 +104,67 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
-  db:
-    restart: always
-    image: postgres:14-alpine
-    shm_size: 256mb
-    networks:
-      - internal_network
-    healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'postgres']
+  wp:
+    image: wordpress:latest # https://hub.docker.com/_/wordpress/
+      ports:
+        - ${IP}:80:80 # change ip if required
     volumes:
-      - ./postgres14:/var/lib/postgresql/data
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+      - ./wp-app:/var/www/html # Full wordpress project
+      #- ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
+      #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
-      - 'POSTGRES_HOST_AUTH_METHOD=trust'
-  redis:
-    restart: always
-    image: redis:7-alpine
-    networks:
-      - internal_network
-    healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: "${DB_NAME}"
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: "${DB_ROOT_PASSWORD}"
+    depends_on:
+      - db_wp
+    links:
+      - db_wp
+  
+  wpcli:
+    image: wordpress:cli
     volumes:
-      - ./redis:/data
-  web:
-    build: .
-    image: tootsuite/mastodon
-    restart: always
-    env_file: .env.production
-    command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
-    networks:
-      - external_network
-      - internal_network
-    healthcheck:
-      # prettier-ignore
-      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+      - ./wp-app:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: "${DB_NAME}"
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: "${DB_ROOT_PASSWORD}"
+    depends_on:
+      - db_wp
+      - wp
+  
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      # https://docs.phpmyadmin.net/en/latest/setup.html#docker-environment-variables
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      UPLOAD_LIMIT: 50M
     ports:
-      - '127.0.0.1:3000:3000'
-    depends_on:
-      - db
-      - redis
-    # - es
-    volumes:
-    - ./public/system:/mastodon/public/system
-    
-  streaming:
-    build: .
-    image: tootsuite/mastodon
-    restart: always
-    env_file: .env.production
-    command: node ./streaming
-    networks:
-      - external_network
-      - internal_network
-    healthcheck:
-      # prettier-ignore
-      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
+      - ${IP}:8080:80
+    links:
+      - db_wp:db_wp
+  
+  db_wp:
+    image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
     ports:
-      - '127.0.0.1:4000:4000'
-    depends_on:
-      - db
-      - redis
-  sidekiq:
-    build: .
-    image: tootsuite/mastodon
-    restart: always
-    env_file: .env.production
-    command: bundle exec sidekiq
-    depends_on:
-      - db
-      - redis
-    networks:
-      - external_network
-      - internal_network
+      - ${IP}:3306:3306 # change ip if required
+    command: [
+        '--default_authentication_plugin=mysql_native_password',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+      ]
     volumes:
-      - ./public/system:/mastodon/public/system
-    healthcheck:
-      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
-  networks:
-    external_network:
-    internal_network:
-      internal: true
+      - ./wp-data:/docker-entrypoint-initdb.d
+      - db_wpdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+  
+  volumes:
+    db_wpdata:
