@@ -165,5 +165,5 @@ services:
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-  volumes:
-    db_data:
+volumes:
+  db_data:
