@@ -106,3 +106,34 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    ports:
+      - "9999:9999"
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "10"
+          max-size: "2m"
+    environment:
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PORT=9999
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+ ## Keep configs, scrapers, and plugins here.
+      - ./config:/opt/stash/.stash
+ ## Point this at your collection.
+      - ./data:/mnt/naslib
+ ## This is where your stash's metadata lives
+      - ./metadata:/mnt/stashdb
+ ## Any other cache content.
+      - ./cache:/mnt/stashdb
+ ## Where to store binary blob data (scene covers, images)
+      - ./blobs:/mnt/stashdb
+ ## Where to store generated content (screenshots,previews,transcodes,sprites)
+      - ./generated:/mnt/stashdb
