@@ -137,3 +137,4 @@ services:
       - /mnt/stashdb/blobs:/blobs
  ## Where to store generated content (screenshots,previews,transcodes,sprites)
       - /mnt/stashdb/generated:/generated
+      - /mnt/stashdb/db:/database
