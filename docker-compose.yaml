@@ -126,7 +126,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
  ## Keep configs, scrapers, and plugins here.
-      - ./config:/opt/stash/.stash
+      - ./config:/opt/stash
  ## Point this at your collection.
       - ./data:/mnt/naslib
  ## This is where your stash's metadata lives
