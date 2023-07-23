@@ -126,14 +126,14 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
  ## Keep configs, scrapers, and plugins here.
-      - ./config:/opt/stash
+      - /opt/stash/.stash:/root/.stash
  ## Point this at your collection.
-      - ./data:/mnt/naslib
+      - /mnt/naslib:/data
  ## This is where your stash's metadata lives
-      - ./metadata:/mnt/stashdb
+      - /mnt/stashdb/metadata:/metadata
  ## Any other cache content.
-      - ./cache:/mnt/stashdb
+      - /mnt/stashdb/cache:/cache
  ## Where to store binary blob data (scene covers, images)
-      - ./blobs:/mnt/stashdb
+      - /mnt/stashdb/blobs:/blobs
  ## Where to store generated content (screenshots,previews,transcodes,sprites)
-      - ./generated:/mnt/stashdb
+      - /mnt/stashdb/generated:/generated
