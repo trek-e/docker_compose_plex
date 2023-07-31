@@ -112,6 +112,7 @@ services:
     image: stashapp/stash:latest
     container_name: stash
     restart: unless-stopped
+    env_file: .env
     ports:
       - "9999:9999"
     logging:
