@@ -15,7 +15,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      TZ=${TZ}
+      - TZ=${TZ}
     restart: unless-stopped
   pihole:
     container_name: pihole
