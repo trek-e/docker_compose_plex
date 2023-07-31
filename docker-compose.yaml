@@ -6,7 +6,7 @@ services:
     container_name: fileflows
     env_file: .env
     environment:
-      - TZ=${TZ}
+      TZ=${TZ}
     volumes:
       - /opt/fileflows:/app/Data
       - /var/log/FileFlow:/app/Logs
