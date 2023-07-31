@@ -26,10 +26,10 @@ services:
       - "53:53/udp"
       - "8080:80/tcp"
     environment:
-      TZ=${TZ}
-      WEBPASSWORD:
-      WEBPASSWORD_FILE: '/mnt/piholeopt:/secrets/admin_pw.txt'
-      DNSMASQ_USER:  'root'
+      - TZ=${TZ}
+      - WEBPASSWORD
+      - WEBPASSWORD_FILE: '/mnt/piholeopt:/secrets/admin_pw.txt'
+      - DNSMASQ_USER:  'root'
     volumes:
       - "/mnt/piholeopt/etc-pihole/:/etc/pihole/"
       - "/mnt/piholeopt/etc-dnsmasq.d/:/etc/dnsmasq.d/"
