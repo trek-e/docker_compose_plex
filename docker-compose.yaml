@@ -147,9 +147,9 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /path/to/data:/config
-      - /path/to/downloads:/downloads #optional
-      - /path/to/incomplete/downloads:/incomplete-downloads #optional
+      - /opt/saznbd:/config
+      - /mnt/naslib/plex/sabnzbd/complete:/downloads #optional
+      - /mnt/naslib/plex/sabnzbd/incomplete:wq:/incomplete-downloads #optional
     ports:
       - 5678:8080
     restart: unless-stopped
