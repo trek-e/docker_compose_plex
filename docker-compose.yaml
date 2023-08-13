@@ -149,7 +149,7 @@ services:
     volumes:
       - /opt/saznbd:/config
       - /mnt/naslib/plex/sabnzbd/complete:/downloads #optional
-      - /mnt/naslib/plex/sabnzbd/incomplete:wq:/incomplete-downloads #optional
+      - /mnt/naslib/plex/sabnzbd/incomplete:/incomplete-downloads #optional
     ports:
       - 5678:8080
     restart: unless-stopped
