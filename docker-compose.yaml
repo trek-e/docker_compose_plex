@@ -11,7 +11,6 @@ services:
       - /opt/fileflows:/app/Data
       - /var/log/FileFlow:/app/Logs
       - /mnt/naslib/plex/library:/media  #optional
-      - /mnt/naslib/plex/nzbget/downloads:/nzbget
     ports:
       - 5000:5000
     restart: unless-stopped
