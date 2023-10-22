@@ -72,10 +72,34 @@ services:
       - TZ=${TZ}
       - BASE_URL=/ombi
     volumes:
-      - /opt/Ombi:/config
+      - /opt/Ombi/config:/config
+      - /opt/Ombi/migrate:/migrate
     ports:
       - "3579:3579"
+    depends_on:
+      - "mariadb"
     restart:  unless-stopped
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ombi_phpmyadmin
+    restart: unless-stopped
+    environment:
+        PMA_HOST: mariadb
+    ports:
+        - 127.0.0.1:8800:8800
+    networks:
+       default:
+          ipv4_address: 172.16.100.122
+    depends_on:
+    - "mariadb"
+  mariadb:
+    image: "mariadb:latest"
+    container_name: ombi_mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL} #change your root password here
+    volumes:
+      -  /opt/Ombi/mariadb:/var/lib/mysql
   nginx:
     image: nginx:latest
     container_name: nginx_container
