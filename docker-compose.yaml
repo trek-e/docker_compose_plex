@@ -86,10 +86,7 @@ services:
     environment:
         PMA_HOST: mariadb
     ports:
-        - 127.0.0.1:8800:8800
-    networks:
-       default:
-          ipv4_address: 172.16.100.122
+        - "8800:8800/tcp"
     depends_on:
     - "mariadb"
   mariadb:
