@@ -10,7 +10,7 @@ services:
     volumes:
       - /opt/fileflows:/app/Data
       - /var/log/FileFlow:/app/Logs
-      - /mnt/naslib/plex/library:/media  #optional
+      - /mnt/naslib/plex/sabnzbd:/media  #optional
     ports:
       - 5000:5000
     restart: unless-stopped
