@@ -144,6 +144,6 @@ services:
       - /mnt/naslib/netbootxyz/assets:/assets
     ports:
       - 3000:3000
-      -69:69/udp
-      -9080:80
+      - 69:69/udp
+      - 9080:80
     restart: unless-stopped
