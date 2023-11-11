@@ -139,7 +139,7 @@ services:
     container_name: netbootxyz
     env_file: .env
     environment:
-      - TZ=$(TZ)
+      - TZ=${TZ}
     volumes:
       - /mnt/naslib/netbootxyz/config:/config
       - /mnt/naslib/netbootxyz/assets:/assets
