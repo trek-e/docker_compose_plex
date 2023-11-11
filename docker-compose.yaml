@@ -137,6 +137,7 @@ services:
   netbootxyz:
     image: ghcr.io/netbootxyz/netbootxyz
     container_name: netbootxyz
+    env_file: .env
     environment:
       - TZ=$(TZ)
     volumes:
