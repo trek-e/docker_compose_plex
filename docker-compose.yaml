@@ -134,3 +134,16 @@ services:
       - /opt/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+  netbootxyz:
+    image: ghcr.io/netbootxyz/netbootxyz
+    container_name: netbootxyz
+    environment:
+      - TZ=$(TZ)
+    volumes:
+      - /mnt/naslib/netbootxyz/config:/config
+      - /mnt/naslib/netbootxyz/assets:/assets
+    ports:
+      - 3000:3000
+      -69:69/udp
+      -9080:80
+    restart: unless-stopped
