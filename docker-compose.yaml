@@ -99,7 +99,7 @@ services:
       -  /opt/Ombi/mariadb:/var/lib/mysql
   nginx:
     image: nginx:latest
-    container_name: nginx_container
+    container_name: nginx
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
@@ -110,7 +110,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     restart:  unless-stopped
   certbot_www:
-    container_name: certbot_www
+    container_name: certbot
     image: certbot/certbot
     volumes: 
       - /var/certbot/conf:/etc/letsencrypt
