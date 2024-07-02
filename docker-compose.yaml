@@ -15,34 +15,6 @@ services:
     ports:
       - 5000:5000
     restart: unless-stopped
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
-    env_file: .env
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8080:80/tcp"
-    environment:
-      - WEBPASSWORD
-      - WEBPASSWORD_FILE:'/mnt/piholeopt:/secrets/admin_pw.txt'
-      - DNSMASQ_USER:'root'
-      - TZ=${TZ}
-    volumes:
-      - "/mnt/piholeopt/etc-pihole/:/etc/pihole/"
-      - "/mnt/piholeopt/etc-dnsmasq.d/:/etc/dnsmasq.d/"
-    restart: unless-stopped
-#  lancache:
-#    image: lancachenet/monolithic:latest
-#    container_name: lancache
-#    env_file: .env
-#    restart: unless-stopped
-#    ports:
-#      - 8080:80/tcp
-#      - 8443:443/tcp
-#    volumes:
-#      - ${CACHE_ROOT}/cache:/data/cache
-#      - ${CACHE_ROOT}/logs:/data/logs
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
@@ -80,24 +52,6 @@ services:
     depends_on:
       - "mariadb"
     restart:  unless-stopped
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: ombi_phpmyadmin
-    restart: unless-stopped
-    environment:
-        PMA_HOST: mariadb
-    ports:
-        - "8800:8800/tcp"
-    depends_on:
-    - "mariadb"
-  mariadb:
-    image: "mariadb:latest"
-    container_name: ombi_mariadb
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL} #change your root password here
-    volumes:
-      -  /opt/Ombi/mariadb:/var/lib/mysql
   nginx:
     image: nginx:latest
     container_name: nginx
