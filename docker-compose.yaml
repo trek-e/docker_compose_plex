@@ -12,7 +12,7 @@ services:
       - /var/log/FileFlow:/app/Logs
       - /mnt/naslib/plex/library:/media  #PlexLib
       - /mnt/naslib/plex/sabnzbd:/downloads  #downloads
-      - /media/adult/plex/library:/media2 #PlexLib2
+      - /mnt/naslib2/plex/library:/media2 #PlexLib2
     ports:
       - 5000:5000
     restart: unless-stopped
