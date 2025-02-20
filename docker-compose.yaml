@@ -22,20 +22,20 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  tautulli:
-    image: ghcr.io/tautulli/tautulli
-    container_name: tautulli
-    restart: unless-stopped
-    env_file: .env
-    volumes:
-      - /opt/Tautulli:/config
-      - /home/plex:/home
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    ports:
-      - "8181:8181"
+#  tautulli:
+#    image: ghcr.io/tautulli/tautulli
+#    container_name: tautulli
+#    restart: unless-stopped
+#    env_file: .env
+#    volumes:
+#      - /opt/Tautulli:/config
+#      - /home/plex:/home
+#    environment:
+#      - PUID=${PUID}
+#      - PGID=${PGID}
+#      - TZ=${TZ}
+#    ports:
+#      - "8181:8181"
   ombi:
     image: lscr.io/linuxserver/ombi
     container_name: ombi
