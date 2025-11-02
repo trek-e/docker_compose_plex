@@ -51,24 +51,3 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
-  portainer:
-    image: portainer/portainer-ce:latest
-    ports:
-      - 9443:9443
-    volumes:
-      - /opt/portainer:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-  netbootxyz:
-    image: ghcr.io/netbootxyz/netbootxyz
-    container_name: netbootxyz
-    env_file: .env
-    environment:
-      - TZ=${TZ}
-    volumes:
-      - /mnt/naslib/netbootxyz/config:/config
-      - /mnt/naslib/netbootxyz/assets:/assets
-    ports:
-      - 3000:3000
-      - 69:69/udp
-    restart: unless-stopped
