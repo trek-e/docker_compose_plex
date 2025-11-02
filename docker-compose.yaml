@@ -1,43 +1,14 @@
 version: "2.4"
 
 services:
-  fileflows:
-    image: revenz/fileflows
-    container_name: fileflows
-    env_file: .env
-    environment:
-      - TZ=${TZ}
-    volumes:
-      - /opt/fileflows:/app/Data
-      - /var/log/FileFlow:/app/Logs
-      - /mnt/naslib/plex/library:/media  #PlexLib
-      - /mnt/naslib/plex/sabnzbd:/downloads  #downloads
-      - /mnt/naslib2/plex/library:/media2 #PlexLib2
-    ports:
-      - 5000:5000
-    restart: unless-stopped
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#  tautulli:
-#    image: ghcr.io/tautulli/tautulli
-#    container_name: tautulli
-#    restart: unless-stopped
-#    env_file: .env
-#    volumes:
-#      - /opt/Tautulli:/config
-#      - /home/plex:/home
-#    environment:
-#      - PUID=${PUID}
-#      - PGID=${PGID}
-#      - TZ=${TZ}
-#    ports:
-#      - "8181:8181"
   ombi:
-    image: lscr.io/linuxserver/ombi
+    image: ghcr.io/linuxserver/ombi:latest
     container_name: ombi
     env_file: .env
     environment:
